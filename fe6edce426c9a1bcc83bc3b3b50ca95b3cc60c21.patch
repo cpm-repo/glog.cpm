@@ -1,0 +1,32 @@
+From fe6edce426c9a1bcc83bc3b3b50ca95b3cc60c21 Mon Sep 17 00:00:00 2001
+From: Chen Linxuan <me@black-desk.cn>
+Date: Sat, 27 Sep 2025 23:42:33 +0800
+Subject: [PATCH] fix(cmake): add SKIP_INSTALL
+
+---
+ CMakeLists.txt | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 45064ab78..6f4823205 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -39,6 +39,7 @@ option (WITH_GTEST "Use Google Test" ON)
+ option (WITH_PKGCONFIG "Enable pkg-config support" OFF)
+ option (WITH_SYMBOLIZE "Enable symbolize module" ON)
+ option (WITH_TLS "Enable Thread Local Storage (TLS) support" ON)
++option (SKIP_INSTALL "Do not install anything" OFF)
+ 
+ set (WITH_UNWIND libunwind CACHE STRING "unwind driver")
+ set_property (CACHE WITH_UNWIND PROPERTY STRINGS none unwind libunwind)
+@@ -960,6 +961,10 @@ if (BUILD_TESTING)
+   )
+ endif (BUILD_TESTING)
+ 
++if (SKIP_INSTALL)
++  return()
++endif()
++
+ install (TARGETS glog
+   EXPORT glog-targets
+   RUNTIME DESTINATION ${_glog_CMake_BINDIR}
